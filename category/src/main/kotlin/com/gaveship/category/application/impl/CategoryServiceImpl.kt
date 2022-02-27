@@ -28,7 +28,7 @@ class CategoryServiceImpl(
 
     @Transactional
     override fun update(category: Category): Category {
-        log.info { "[category-service][update][start]Category(id='${category.id}', name='${category.name}')" }
+        log.info { "[category-service][update][start]Category(id='${category.id}', name='${category.name}', children='${category.children}')" }
         val categoryId = category.id ?: throw IllegalArgumentException("ID can't not be null")
         if (!categoryRepository.existsById(categoryId)) throw NotExistCategoryException("Not exist category (ID = $categoryId)")
         val updatedCategory = categoryRepository
@@ -38,8 +38,12 @@ class CategoryServiceImpl(
     }
 
     @Transactional
-    override fun delete(id: Long): Unit = categoryRepository
+    override fun delete(id: Long) {
+        log.info { "[category-service][delete][start]Category(id='$id')" }
+        categoryRepository
             .deleteById(id)
+        log.debug { "[category-service][delete][deleted]" }
+    }
 
     @Transactional(readOnly = true)
     override fun findAll(): List<Category> {

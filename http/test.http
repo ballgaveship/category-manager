@@ -53,4 +53,4 @@ Content-Type: application/json
 }
 
 ### Category 삭제
-DELETE {{host}}/v1/categories/5
+DELETE {{host}}/v1/categories/1
