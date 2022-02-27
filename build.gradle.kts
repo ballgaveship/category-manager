@@ -63,7 +63,7 @@ subprojects {
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom("org.springframework.cloud:spring-cloud-dependencies:2021.0.0")
+                mavenBom("org.springframework.cloud:spring-cloud-dependencies:2021.0.1")
             }
             dependency("io.github.microutils:kotlin-logging:1.12.5")
             dependency("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
