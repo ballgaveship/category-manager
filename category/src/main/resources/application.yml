@@ -28,10 +28,10 @@ spring:
     hibernate:
 #      ddl-auto: update
       ddl-auto: none
-    show-sql: true
+#    show-sql: true
     properties:
       hibernate:
-        format_sql: true
+#        format_sql: true
         order_inserts: true
         order_updates: true
         jdbc:

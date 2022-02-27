@@ -1,6 +1,7 @@
 package com.gaveship.category.application
 
 import mu.KotlinLogging
+import org.apache.catalina.connector.RequestFacade
 import org.springframework.stereotype.Component
 import java.io.IOException
 import java.time.Duration
@@ -24,7 +25,7 @@ class ElapsedTimeCheckFilter : Filter {
         } finally {
             val finish = Instant.now()
             val time: Long = Duration.between(start, finish).toMillis()
-            log.trace("[elapsed-check-filter]uri: ${(req as HttpServletRequest).requestURI}, elapsedTime: ${time}ms")
+            log.trace("[elapsed-check-filter]uri: [${(req as RequestFacade).method}]${(req as HttpServletRequest).requestURI}, elapsedTime: ${time}ms")
         }
     }
 }

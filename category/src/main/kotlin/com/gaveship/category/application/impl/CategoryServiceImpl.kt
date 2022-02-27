@@ -18,12 +18,12 @@ class CategoryServiceImpl(
 
     @Transactional
     override fun insert(category: Category): Category {
-        log.info { "[category-service][insert]Category(name='${category.name}')" }
+        log.info { "[category-service][insert][start]Category(name='${category.name}')" }
         if (category.id != null) throw IllegalArgumentException("ID can't not be exist")
-        val createdCategory = categoryRepository
+        val insertedCategory = categoryRepository
             .save(category)
-        log.debug { "[category-service][insert][created]$category" }
-        return createdCategory
+        log.debug { "[category-service][insert][inserted]$category" }
+        return insertedCategory
     }
 
     @Transactional
@@ -39,13 +39,23 @@ class CategoryServiceImpl(
             .deleteById(id)
 
     @Transactional(readOnly = true)
-    override fun findAll(): List<Category> = categoryRepository
+    override fun findAll(): List<Category> {
+        log.info { "[category-service][findAll][start]" }
+        val foundCategories = categoryRepository
             .findAllByParentIdNull()
+        log.debug { "[category-service][findAll]$foundCategories" }
+        return foundCategories
+    }
 
     @Transactional(readOnly = true)
-    override fun find(id: Long): Category = categoryRepository
+    override fun find(id: Long): Category {
+        log.info { "[category-service][find][start]id=$id" }
+        val foundCategory = categoryRepository
             .findById(id)
             .orElseThrow {
                 NotExistCategoryException(id)
             }
+        log.debug { "[category-service][findAll]$foundCategory" }
+        return foundCategory
+    }
 }
