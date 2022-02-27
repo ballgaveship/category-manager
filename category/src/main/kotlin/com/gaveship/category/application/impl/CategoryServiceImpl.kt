@@ -28,10 +28,13 @@ class CategoryServiceImpl(
 
     @Transactional
     override fun update(category: Category): Category {
+        log.info { "[category-service][update][start]Category(id='${category.id}', name='${category.name}')" }
         val categoryId = category.id ?: throw IllegalArgumentException("ID can't not be null")
         if (!categoryRepository.existsById(categoryId)) throw NotExistCategoryException("Not exist category (ID = $categoryId)")
-        return categoryRepository
+        val updatedCategory = categoryRepository
             .save(category)
+        log.debug { "[category-service][update][updated]$category" }
+        return updatedCategory
     }
 
     @Transactional

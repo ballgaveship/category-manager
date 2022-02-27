@@ -35,7 +35,7 @@ GET {{host}}/v1/categories/2
 
 
 ### Category 세부 수정
-PUT {{host}}/v1/categories/4
+PUT {{host}}/v1/categories/3
 Content-Type: application/json
 
 {
