@@ -37,6 +37,7 @@ class CategoryRepositoryUpdateTest(
             val updatedCategory = categoryRepository.save(savedCategory)
 
             updatedCategory.name shouldBe targetName
+            categoryRepository.deleteById(savedCategory.id!!)
         }
 
         "ID를 통한 Category 수정시 Name 글자 수 초과 실패 Test" {
