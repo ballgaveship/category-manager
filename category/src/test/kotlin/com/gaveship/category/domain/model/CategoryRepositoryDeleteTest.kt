@@ -1,5 +1,6 @@
 package com.gaveship.category.domain.model
 
+import com.gaveship.category.Mock
 import com.gaveship.category.application.NotExistCategoryException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -38,7 +39,7 @@ class CategoryRepositoryDeleteTest(
         }
 
         "ID를 통한 하위 계층을 가진 Category 삭제 성공 Test" {
-            val categoryChildren = Mock.category().chunked(10, 10).single().toSet()
+            val categoryChildren = Mock.category().chunked(10, 10).single()
             val targetCategory = Mock.category(children = categoryChildren).single()
             val savedCategory = categoryRepository.save(targetCategory)
 

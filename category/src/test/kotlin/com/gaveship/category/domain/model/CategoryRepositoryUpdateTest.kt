@@ -1,5 +1,6 @@
 package com.gaveship.category.domain.model
 
+import com.gaveship.category.Mock
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -29,7 +30,7 @@ class CategoryRepositoryUpdateTest(
     init {
         "ID를 통한 Category 수정 성공 Test" {
             val targetName = "changed"
-            val categoryChildren = Mock.category().chunked(10, 10).single().toSet()
+            val categoryChildren = Mock.category().chunked(10, 10).single()
             val targetCategory = Mock.category(children = categoryChildren).single()
             val savedCategory = categoryRepository.save(targetCategory)
 

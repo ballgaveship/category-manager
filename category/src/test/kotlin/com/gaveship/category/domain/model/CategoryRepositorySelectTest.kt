@@ -1,5 +1,6 @@
 package com.gaveship.category.domain.model
 
+import com.gaveship.category.Mock
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.collections.singleElement
@@ -36,7 +37,7 @@ class CategoryRepositorySelectTest(
         }
 
         "ID를 통한 Category 조회 성공 Test" {
-            val categoryChildren = Mock.category().chunked(10, 10).single().toSet()
+            val categoryChildren = Mock.category().chunked(10, 10).single()
             val targetCategory = Mock.category(children = categoryChildren).single()
             val savedCategory = categoryRepository.save(targetCategory)
 
