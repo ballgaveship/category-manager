@@ -4,6 +4,7 @@ import com.gaveship.category.application.CategoryService
 import com.gaveship.category.application.NotExistCategoryException
 import com.gaveship.category.domain.model.Category
 import com.gaveship.category.domain.model.CategoryRepository
+import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -11,11 +12,18 @@ import org.springframework.transaction.annotation.Transactional
 class CategoryServiceImpl(
     private val categoryRepository: CategoryRepository
 ) : CategoryService {
+    companion object {
+        private val log = KotlinLogging.logger { }
+    }
+
     @Transactional
     override fun insert(category: Category): Category {
+        log.info { "[category-service][insert]Category(name='${category.name}')" }
         if (category.id != null) throw IllegalArgumentException("ID can't not be exist")
-        return categoryRepository
+        val createdCategory = categoryRepository
             .save(category)
+        log.debug { "[category-service][insert][created]$category" }
+        return createdCategory
     }
 
     @Transactional

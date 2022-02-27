@@ -2,12 +2,23 @@ application:
   version: 2022.0.0-SNAPSHOT
   title: for category managing
 
+server:
+  error:
+    include-stacktrace: never
+
+logging:
+  pattern:
+    dateformat: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+  level:
+    org.springframework.context.support: error
+    com.gaveship.category: trace
+
 spring:
   application:
     name: category-manager
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:user;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:category;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
   jpa:
@@ -21,13 +32,18 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 20000
         default_batch_fetch_size: 100
   h2:
     console:
       enabled: true
       path: /h2
   flyway:
-    url: jdbc:h2:mem:user;DB_CLOSE_DELAY=-1
+    schemas: PUBLIC
+    url: jdbc:h2:mem:category;DB_CLOSE_DELAY=-1
 #    baseline-on-migrate: false
     baseline-on-migrate: true
     user: sa
