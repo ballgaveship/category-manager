@@ -71,6 +71,8 @@ subprojects {
             dependency("io.kotest:kotest-property:5.1.0")
             dependency("io.kotest:kotest-assertions-core:5.1.0")
             dependency("io.kotest.extensions:kotest-extensions-spring:1.1.0")
+            dependency("io.mockk:mockk:1.12.2")
+            dependency("com.ninja-squad:springmockk:3.1.1")
         }
     }
 

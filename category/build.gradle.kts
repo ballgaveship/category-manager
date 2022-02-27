@@ -15,6 +15,8 @@ dependencies {
     testImplementation("io.kotest:kotest-property")
     testImplementation("io.kotest:kotest-assertions-core")
     testImplementation("io.kotest.extensions:kotest-extensions-spring")
+    testImplementation("io.mockk:mockk")
+    testImplementation("com.ninja-squad:springmockk")
 
     runtimeOnly("com.h2database:h2")
 }

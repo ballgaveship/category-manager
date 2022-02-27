@@ -1,0 +1,102 @@
+package com.gaveship.category.interfaces.web.v1
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.gaveship.category.Mock
+import com.gaveship.category.application.CategoryService
+import com.ninjasquad.springmockk.MockkBean
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.property.arbitrary.chunked
+import io.kotest.property.arbitrary.single
+import io.mockk.every
+import io.mockk.just
+import io.mockk.runs
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.web.context.WebApplicationContext
+
+@SpringBootTest
+class CategoryControllerIntegrationTest(
+    private val objectMapper: ObjectMapper,
+    ctx: WebApplicationContext
+) : StringSpec() {
+    @MockkBean
+    private lateinit var categoryService: CategoryService
+
+    private val mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build()
+
+    companion object {
+        private const val BASE_ENDPOINT = "/v1/categories"
+    }
+
+    init {
+        "전체 Category 조회 테스트" {
+            val categoryChildren = Mock.category().chunked(10, 10).single()
+            val targetCategory = Mock.category(children = categoryChildren).single()
+            val response = listOf(targetCategory)
+
+            every { categoryService.findAll() } returns response
+
+            mockMvc.perform(get(BASE_ENDPOINT))
+                .andDo(print())
+                .andExpect(status().isOk)
+                .andExpect(content().string(objectMapper.writeValueAsString(response)))
+        }
+
+        "Category 등록 테스트" {
+            val categoryChildren = Mock.category().chunked(10, 10).single()
+            val targetCategory = Mock.category(children = categoryChildren).single()
+            every { categoryService.insert(targetCategory) } returns targetCategory
+
+            mockMvc.perform(post(BASE_ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(targetCategory))
+            )
+                .andDo(print())
+                .andExpect(status().isOk)
+                .andExpect(content().string(objectMapper.writeValueAsString(targetCategory)))
+        }
+
+        "Category 조회 테스트" {
+            val categoryChildren = Mock.category().chunked(10, 10).single()
+            val targetCategory = Mock.category(id = 1, children = categoryChildren).single()
+            val targetCategoryId = targetCategory.id ?: throw IllegalArgumentException()
+            every { categoryService.find(targetCategoryId) } returns targetCategory
+
+            mockMvc.perform(get("$BASE_ENDPOINT/$targetCategoryId"))
+                .andDo(print())
+                .andExpect(status().isOk)
+                .andExpect(content().string(objectMapper.writeValueAsString(targetCategory)))
+        }
+
+        "Category 수정 테스트" {
+            val categoryChildren = Mock.category().chunked(10, 10).single()
+            val targetCategory = Mock.category(id = 1, children = categoryChildren).single()
+            val targetCategoryId = targetCategory.id ?: throw IllegalArgumentException()
+            every { categoryService.update(targetCategory) } returns targetCategory
+
+            mockMvc.perform(put("$BASE_ENDPOINT/$targetCategoryId")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(targetCategory))
+            )
+                .andDo(print())
+                .andExpect(status().isOk)
+                .andExpect(content().string(objectMapper.writeValueAsString(targetCategory)))
+        }
+
+        "Category 삭제 테스트" {
+            val targetCategoryId = 1L
+            every { categoryService.delete(targetCategoryId) } just runs
+
+            mockMvc.perform(delete("$BASE_ENDPOINT/$targetCategoryId")
+                .contentType(MediaType.APPLICATION_JSON)
+            )
+                .andDo(print())
+                .andExpect(status().isNoContent)
+        }
+    }
+}

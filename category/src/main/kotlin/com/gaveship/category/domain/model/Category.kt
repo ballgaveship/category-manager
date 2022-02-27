@@ -38,7 +38,7 @@ class Category(
 
     @get:OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @get:JoinColumn(name = "parentId")
-    var children: Set<Category>? = null
+    var children: List<Category>? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
