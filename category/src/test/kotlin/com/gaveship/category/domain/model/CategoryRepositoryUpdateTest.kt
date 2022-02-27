@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 @EnableJpaAuditing
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
 @DataJpaTest(
+    showSql = true,
     properties = [
         "spring.flyway.enabled=false",
         "spring.jpa.hibernate.ddl-auto=create"

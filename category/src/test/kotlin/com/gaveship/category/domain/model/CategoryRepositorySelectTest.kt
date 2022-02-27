@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 
 @EnableJpaAuditing
 @DataJpaTest(
+    showSql = true,
     properties = [
         "spring.flyway.enabled=false",
         "spring.jpa.hibernate.ddl-auto=create"

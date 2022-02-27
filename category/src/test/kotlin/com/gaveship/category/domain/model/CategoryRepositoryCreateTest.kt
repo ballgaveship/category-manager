@@ -20,6 +20,7 @@ import javax.validation.ConstraintViolationException
 
 @EnableJpaAuditing
 @DataJpaTest(
+    showSql = true,
     properties = [
         "spring.flyway.enabled=false",
         "spring.jpa.hibernate.ddl-auto=create"
