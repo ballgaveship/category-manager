@@ -47,6 +47,7 @@ subprojects {
             implementation("org.jetbrains.kotlin:kotlin-reflect")
             implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
             implementation("io.github.microutils:kotlin-logging")
+            testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
         }
 
         tasks.jar {
@@ -65,6 +66,11 @@ subprojects {
                 mavenBom("org.springframework.cloud:spring-cloud-dependencies:2021.0.0")
             }
             dependency("io.github.microutils:kotlin-logging:1.12.5")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+            dependency("io.kotest:kotest-runner-junit5:5.1.0")
+            dependency("io.kotest:kotest-property:5.1.0")
+            dependency("io.kotest:kotest-assertions-core:5.1.0")
+            dependency("io.kotest.extensions:kotest-extensions-spring:1.1.0")
         }
     }
 
@@ -73,5 +79,9 @@ subprojects {
             freeCompilerArgs = listOf("-Xjsr305=strict")
             jvmTarget = "17"
         }
+    }
+
+    tasks.withType<Test>().configureEach {
+        useJUnitPlatform()
     }
 }

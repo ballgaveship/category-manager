@@ -10,6 +10,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.flywaydb:flyway-core")
     runtimeOnly("com.h2database:h2")
+
+    testImplementation("io.kotest:kotest-runner-junit5")
+    testImplementation("io.kotest:kotest-property")
+    testImplementation("io.kotest:kotest-assertions-core")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring")
 }
 
 jib {
