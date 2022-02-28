@@ -17,7 +17,7 @@ items:
             app: category-manager
         spec:
           containers:
-            - image: ballgaveship/category-manager:2020.0.0
+            - image: ballgaveship/category-manager:2022.0.0
               name: category-manager
               imagePullPolicy: "Always"
               ports:
