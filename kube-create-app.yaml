@@ -1,0 +1,33 @@
+apiVersion: v1
+items:
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: category-manager
+      name: category-manager
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: category-manager
+      template:
+        metadata:
+          labels:
+            app: category-manager
+        spec:
+          containers:
+            - image: ballgaveship/category-manager:2020.0.0
+              name: category-manager
+              imagePullPolicy: "Always"
+              ports:
+                - containerPort: 8080
+                  protocol: TCP
+              volumeMounts:
+                - mountPath: /tmp
+                  name: category-manager
+          volumes:
+            - emptyDir: {}
+              name: category-manager
+kind: List
+metadata: {}

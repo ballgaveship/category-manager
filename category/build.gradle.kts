@@ -1,5 +1,3 @@
-version = "2022.0.0-SNAPSHOT"
-
 plugins {
     id("com.google.cloud.tools.jib") version "3.2.0"
 }

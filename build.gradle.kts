@@ -28,7 +28,7 @@ java {
 
 allprojects {
     group = "com.gaveship"
-    version = "0.0.1-SNAPSHOT"
+    version = "2022.0.0"
 
     repositories {
         mavenCentral()
@@ -79,7 +79,7 @@ subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "17"
+            jvmTarget = "11"
         }
     }
 
