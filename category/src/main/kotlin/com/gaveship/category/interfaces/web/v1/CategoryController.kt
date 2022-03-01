@@ -40,6 +40,16 @@ class CategoryController(
         }
     )
 
+    @PatchMapping("/{categoryId}")
+    fun patchCategory(
+        @PathVariable categoryId: Long,
+        @Valid @RequestBody(required = true) category: Category
+    ): Category = categoryService.patch(
+        category.apply {
+            this.id = categoryId
+        }
+    )
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{categoryId}")
     fun deleteCategory(

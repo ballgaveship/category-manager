@@ -20,7 +20,7 @@ class Category(
 
     @get:Size(min = 0, max = 50)
     @get:Column(nullable = false, length = 50)
-    var name: String = "",
+    var name: String? = null,
 
     @get:JsonIgnore
     @get:Column(nullable = false, updatable = false)

@@ -31,10 +31,27 @@ class CategoryServiceImpl(
         log.info { "[category-service][update][start]Category(id='${category.id}', name='${category.name}', children='${category.children}')" }
         val categoryId = category.id ?: throw IllegalArgumentException("ID can't not be null")
         if (!categoryRepository.existsById(categoryId)) throw NotExistCategoryException("Not exist category (ID = $categoryId)")
-        val updatedCategory = categoryRepository
+        val savedCategory = categoryRepository
             .save(category)
-        log.debug { "[category-service][update][updated]$category" }
-        return updatedCategory
+        log.debug { "[category-service][update][updated]$savedCategory" }
+        return savedCategory
+    }
+
+    @Transactional
+    override fun patch(category: Category): Category {
+        log.info { "[category-service][patch][start]Category(id='${category.id}', name='${category.name}', children='${category.children}')" }
+        val categoryId = category.id ?: throw IllegalArgumentException("ID can't not be null")
+        val foundCategory = find(categoryId)
+        if (category.name != null) {
+            foundCategory.name = category.name
+        }
+        if (category.children != null) {
+            foundCategory.children = category.children
+        }
+        val savedCategory = categoryRepository
+            .save(category)
+        log.debug { "[category-service][patch][patched]$savedCategory" }
+        return savedCategory
     }
 
     @Transactional

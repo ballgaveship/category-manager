@@ -75,11 +75,12 @@ class CategoryControllerIntegrationTest(
 
         "Category 수정 테스트" {
             val categoryChildren = Mock.category().chunked(10, 10).single()
-            val targetCategory = Mock.category(id = 1, children = categoryChildren).single()
-            val targetCategoryId = targetCategory.id ?: throw IllegalArgumentException()
-            every { categoryService.update(targetCategory) } returns targetCategory
+            val originCategory = Mock.category(id = 1, name = "origin", children = categoryChildren).single()
+            val targetCategory = Mock.category(name = "target").single()
+            val originCategoryId = originCategory.id ?: throw IllegalArgumentException()
+            every { categoryService.update(originCategory) } returns targetCategory
 
-            mockMvc.perform(put("$BASE_ENDPOINT/$targetCategoryId")
+            mockMvc.perform(put("$BASE_ENDPOINT/$originCategoryId")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(targetCategory))
             )
@@ -97,6 +98,24 @@ class CategoryControllerIntegrationTest(
             )
                 .andDo(print())
                 .andExpect(status().isNoContent)
+        }
+
+        "Category 부분 수정 테스트" {
+            val categoryChildren = Mock.category().chunked(10, 10).single()
+            val originCategory = Mock.category(id = 1, name = "origin", children = categoryChildren).single()
+            val targetCategory = Mock.category(name = "test").single()
+            val patchedCategory = Mock.category(name = "test", children = categoryChildren).single()
+            val originCategoryId = originCategory.id ?: throw IllegalArgumentException()
+
+            every { categoryService.patch(originCategory) } returns patchedCategory
+
+            mockMvc.perform(patch("$BASE_ENDPOINT/$originCategoryId")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(targetCategory))
+            )
+                .andDo(print())
+                .andExpect(status().isOk)
+                .andExpect(content().string(objectMapper.writeValueAsString(patchedCategory)))
         }
     }
 }
