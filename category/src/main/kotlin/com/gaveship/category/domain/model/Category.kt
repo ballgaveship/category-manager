@@ -36,6 +36,7 @@ class Category(
     @get:JsonBackReference
     var parent: Category? = null,
 
+    @get:Size(min = 0, max = 20)
     @get:OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @get:JoinColumn(name = "parentId")
     var children: List<Category>? = null
