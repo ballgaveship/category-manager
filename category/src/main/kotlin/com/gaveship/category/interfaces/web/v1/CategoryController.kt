@@ -11,7 +11,6 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 import javax.validation.Valid
 
-
 @Validated
 @RestController
 @RequestMapping("/v1/categories")

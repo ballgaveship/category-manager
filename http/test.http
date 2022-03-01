@@ -7,6 +7,15 @@ Content-Type: application/json
 }
 
 
+### Category Name 범위 초과 등록
+POST {{host}}/v1/categories
+Content-Type: application/json
+
+{
+  "name": "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest"
+}
+
+
 ### Category 하위 등록
 POST {{host}}/v1/categories
 Content-Type: application/json
