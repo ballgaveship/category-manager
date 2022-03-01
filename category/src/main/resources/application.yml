@@ -1,5 +1,5 @@
 application:
-  version: 2022.0.0
+  version: 2022.0.1
   title: for category managing
 
 server:

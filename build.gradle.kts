@@ -11,7 +11,7 @@ plugins {
     java
 }
 
-val projectVersion = "2022.0.0"
+val projectVersion = "2022.0.1"
 
 val springCloudBom = "2021.0.1"
 val kotlinLogging = "1.12.5"
