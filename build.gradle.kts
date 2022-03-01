@@ -11,6 +11,16 @@ plugins {
     java
 }
 
+val projectVersion = "2022.0.0"
+
+val springCloudBom = "2021.0.1"
+val kotlinLogging = "1.12.5"
+val coroutinesTest = "1.6.0"
+val kotest = "5.1.0"
+val kotestExtensions = "1.1.0"
+val mockk = "1.12.2"
+val springmockk = "3.1.1"
+
 noArg {
     annotation("javax.persistence.Entity")
 }
@@ -28,7 +38,7 @@ java {
 
 allprojects {
     group = "com.gaveship"
-    version = "2022.0.0"
+    version = projectVersion
 
     repositories {
         mavenCentral()
@@ -63,16 +73,16 @@ subprojects {
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom("org.springframework.cloud:spring-cloud-dependencies:2021.0.1")
+                mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudBom")
             }
-            dependency("io.github.microutils:kotlin-logging:1.12.5")
-            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
-            dependency("io.kotest:kotest-runner-junit5:5.1.0")
-            dependency("io.kotest:kotest-property:5.1.0")
-            dependency("io.kotest:kotest-assertions-core:5.1.0")
-            dependency("io.kotest.extensions:kotest-extensions-spring:1.1.0")
-            dependency("io.mockk:mockk:1.12.2")
-            dependency("com.ninja-squad:springmockk:3.1.1")
+            dependency("io.github.microutils:kotlin-logging:$kotlinLogging")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTest")
+            dependency("io.kotest:kotest-runner-junit5:$kotest")
+            dependency("io.kotest:kotest-property:$kotest")
+            dependency("io.kotest:kotest-assertions-core:$kotest")
+            dependency("io.kotest.extensions:kotest-extensions-spring:$kotestExtensions")
+            dependency("io.mockk:mockk:$mockk")
+            dependency("com.ninja-squad:springmockk:$springmockk")
         }
     }
 
