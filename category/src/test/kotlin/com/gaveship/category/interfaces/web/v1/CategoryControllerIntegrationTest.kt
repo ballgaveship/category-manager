@@ -11,11 +11,11 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.runs
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 
@@ -49,16 +49,19 @@ class CategoryControllerIntegrationTest(
 
         "Category 등록 테스트" {
             val categoryChildren = Mock.category().chunked(10, 10).single()
+            val createdCategoryId = 1L
             val targetCategory = Mock.category(children = categoryChildren).single()
-            every { categoryService.insert(targetCategory) } returns targetCategory
+            val createdCategory = Mock.category(id = createdCategoryId, children = categoryChildren).single()
+            every { categoryService.insert(targetCategory) } returns createdCategory
 
             mockMvc.perform(post(BASE_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(targetCategory))
             )
                 .andDo(print())
-                .andExpect(status().isOk)
-                .andExpect(content().string(objectMapper.writeValueAsString(targetCategory)))
+                .andExpect(status().isCreated)
+                .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost/v1/categories/$createdCategoryId"))
+                .andExpect(jsonPath("$").doesNotExist())
         }
 
         "Category 조회 테스트" {
@@ -98,6 +101,7 @@ class CategoryControllerIntegrationTest(
             )
                 .andDo(print())
                 .andExpect(status().isNoContent)
+                .andExpect(jsonPath("$").doesNotExist())
         }
 
         "Category 부분 수정 테스트" {
