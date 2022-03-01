@@ -22,12 +22,15 @@ class CategoryController(
     }
 
     @GetMapping
-    fun getCategories(): List<Category> = categoryService.findAll()
+    fun getCategories(
+        @RequestParam(defaultValue = "-1") depth: Int
+    ): List<Category> = categoryService.findAll(depth)
 
     @GetMapping("/{categoryId}")
     fun getCategory(
-        @PathVariable categoryId: Long
-    ): Category = categoryService.find(categoryId)
+        @PathVariable categoryId: Long,
+        @RequestParam(defaultValue = "-1") depth: Int
+    ): Category = categoryService.find(categoryId, depth)
 
     @PostMapping
     fun createCategory(

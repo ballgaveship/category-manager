@@ -24,10 +24,51 @@ Content-Type: application/json
   "name": "Test",
   "children": [
     {
-      "name": "Test02",
+      "name": "TestTest01",
       "children": [
         {
-          "name": "Test03"
+          "name": "TestTestTest01",
+          "children": [
+            {
+              "name": "TestTestTestTest01",
+              "children": [
+                {
+                  "name": "TestTestTestTestTest01"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TestTest02",
+      "children": [
+        {
+          "name": "TestTestTest01",
+          "children": [
+            {
+              "name": "TestTestTestTest01",
+              "children": [
+                {
+                  "name": "TestTestTestTestTest01"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TestTestTest02",
+          "children": [
+            {
+              "name": "TestTestTestTest01",
+              "children": [
+                {
+                  "name": "TestTestTestTestTest01"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
@@ -39,8 +80,28 @@ Content-Type: application/json
 GET {{host}}/v1/categories
 
 
-### Category 세부 조회
-GET {{host}}/v1/categories/2
+### Category 조회 (with Depth)
+GET {{host}}/v1/categories?depth=1
+
+
+### Category 세부 조회 (Depth 0)
+GET {{host}}/v1/categories/1?depth=0
+
+
+### Category 세부 조회 (Depth 1)
+GET {{host}}/v1/categories/1?depth=1
+
+
+### Category 세부 조회 (Depth 2)
+GET {{host}}/v1/categories/1?depth=2
+
+
+### Category 세부 조회 (Depth 3)
+GET {{host}}/v1/categories/1?depth=3
+
+
+### Category 세부 조회 (Depth 4)
+GET {{host}}/v1/categories/1?depth=4
 
 
 ### Category 세부 수정

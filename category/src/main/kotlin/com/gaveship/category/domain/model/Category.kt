@@ -31,13 +31,13 @@ class Category(
     @get:LastModifiedDate
     var modifiedDate: LocalDateTime? = null,
 
-    @get:ManyToOne
+    @get:ManyToOne(fetch = FetchType.LAZY)
     @get:JoinColumn(name = "parentId")
     @get:JsonBackReference
     var parent: Category? = null,
 
     @get:Size(min = 0, max = 20)
-    @get:OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    @get:OneToMany(cascade = [CascadeType.ALL])
     @get:JoinColumn(name = "parentId")
     var children: List<Category>? = null
 ) {
@@ -57,6 +57,6 @@ class Category(
     }
 
     override fun toString(): String {
-        return "Category(id=$id, name='$name', createdDate=$createdDate, modifiedDate=$modifiedDate, children=$children)"
+        return "Category(id=$id, name='$name', createdDate=$createdDate, modifiedDate=$modifiedDate)"
     }
 }

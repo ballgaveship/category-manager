@@ -2,6 +2,7 @@ package com.gaveship.category.application.impl
 
 import com.gaveship.category.application.CategoryService
 import com.gaveship.category.application.NotExistCategoryException
+import com.gaveship.category.application.getByDepth
 import com.gaveship.category.domain.model.Category
 import com.gaveship.category.domain.model.CategoryRepository
 import mu.KotlinLogging
@@ -63,23 +64,23 @@ class CategoryServiceImpl(
     }
 
     @Transactional(readOnly = true)
-    override fun findAll(): List<Category> {
+    override fun findAll(depth: Int): List<Category> {
         log.info { "[category-service][findAll][start]" }
         val foundCategories = categoryRepository
             .findAllByParentIdNull()
         log.debug { "[category-service][findAll]$foundCategories" }
-        return foundCategories
+        return foundCategories.map { it.getByDepth(depth) }
     }
 
     @Transactional(readOnly = true)
-    override fun find(id: Long): Category {
+    override fun find(id: Long, depth: Int): Category {
         log.info { "[category-service][find][start]id=$id" }
         val foundCategory = categoryRepository
             .findById(id)
             .orElseThrow {
                 NotExistCategoryException(id)
             }
-        log.debug { "[category-service][findAll]$foundCategory" }
-        return foundCategory
+        log.debug { "[category-service][find]$foundCategory" }
+        return foundCategory.getByDepth(depth)
     }
 }

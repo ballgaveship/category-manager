@@ -7,6 +7,6 @@ interface CategoryService {
     fun update(category: Category): Category
     fun patch(category: Category): Category
     fun delete(id: Long)
-    fun findAll(): List<Category>
-    fun find(id: Long): Category
+    fun findAll(depth: Int = -1): List<Category>
+    fun find(id: Long, depth: Int = -1): Category
 }
