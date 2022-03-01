@@ -21,10 +21,14 @@ dependencies {
 
 jib {
     from {
-        image = "amazoncorretto:17"
+        image = "amazoncorretto:17.0.2"
         platforms {
+//            platform {
+//                architecture = "arm64"
+//                os = "linux"
+//            }
             platform {
-                architecture = "arm64"
+                architecture = "amd64"
                 os = "linux"
             }
         }

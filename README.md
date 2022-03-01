@@ -61,7 +61,11 @@ Request, Response 에 관한 각종 예시와 테스트 할 수 있는 방법을
 
 [docker image로 이동](https://hub.docker.com/r/ballgaveship/category-manager)
 
-> docker run -p 8080:8080 ballgaveship/category-manager:2022.0.0
+> docker run -p 8080:8080 ballgaveship/category-manager:2022.0.1
+
+image tag 중 arm64를 선택할 수 있습니다.
+
+> docker run -p 8080:8080 ballgaveship/category-manager:2022.0.1-arm64
 
 ##    
 
