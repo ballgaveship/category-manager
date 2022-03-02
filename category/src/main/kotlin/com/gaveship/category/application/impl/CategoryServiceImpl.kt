@@ -77,8 +77,8 @@ class CategoryServiceImpl(
         log.info { "[category-service][find][start]id=$id" }
         val foundCategory = categoryRepository
             .findById(id)
-            .orElseThrow {
-                NotExistCategoryException(id)
+            .run {
+                orElseThrow { NotExistCategoryException(id) }
             }
         log.debug { "[category-service][find]$foundCategory" }
         return foundCategory.getByDepth(depth)

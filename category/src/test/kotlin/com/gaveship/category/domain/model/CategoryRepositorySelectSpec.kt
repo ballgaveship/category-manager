@@ -21,9 +21,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
         "spring.jpa.hibernate.ddl-auto=create"
     ]
 )
-class CategoryRepositorySelectTest(
+class CategoryRepositorySelectSpec(
     private val categoryRepository: CategoryRepository
-): StringSpec() {
+) : StringSpec() {
     init {
         "Root Categories 조회 성공 Test" {
             val targetCategory = Mock.category().single()
@@ -49,6 +49,5 @@ class CategoryRepositorySelectTest(
             foundCategory.children!!.map { it.name } shouldBe
                     targetCategory.children!!.map { it.name }
         }
-
     }
 }

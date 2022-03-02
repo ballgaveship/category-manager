@@ -24,9 +24,9 @@ import org.springframework.transaction.annotation.Transactional
         "spring.jpa.hibernate.ddl-auto=create"
     ]
 )
-class CategoryRepositoryUpdateTest(
+class CategoryRepositoryUpdateSpec(
     private val categoryRepository: CategoryRepository
-): StringSpec() {
+) : StringSpec() {
     init {
         "ID를 통한 Category 수정 성공 Test" {
             val targetName = "changed"

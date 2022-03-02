@@ -5,6 +5,7 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 import io.kotest.property.arbitrary.next
 import io.kotest.property.arbitrary.string
+import java.time.LocalDateTime
 
 object Mock {
     fun category(
@@ -15,6 +16,8 @@ object Mock {
         Category(
             id = id,
             name = name ?: Arb.string(0, 50).next(it),
+            createdDate = LocalDateTime.now(),
+            modifiedDate = LocalDateTime.now(),
             children = children
         )
     }
