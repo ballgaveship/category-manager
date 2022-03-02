@@ -40,6 +40,7 @@ Request, Response 에 관한 각종 예시와 테스트 할 수 있는 방법을
 │   └── interfaces
 │       └── web
 └── test
+    ├── application
     ├── domain
     └── interfaces
 ```
@@ -48,6 +49,7 @@ Request, Response 에 관한 각종 예시와 테스트 할 수 있는 방법을
   - domain : Category의 업무 로직이 수행되는 핵심 도메인 영역
   - interfaces : Category Manager가 외부와의 통신을 담당하는 어댑터 영역
 - test
+  - application : 유스케이스를 기반으로 한 Feature Test 영역
   - domain : Category Repository 레벨의 Unit Test 영역
   - interfaces : SpringBootTest가 적용하여 Interface를 Test 하는 Integration Test 영역 
 
