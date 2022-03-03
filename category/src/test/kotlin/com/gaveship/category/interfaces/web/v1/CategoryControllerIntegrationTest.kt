@@ -3,6 +3,7 @@ package com.gaveship.category.interfaces.web.v1
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.gaveship.category.Mock
 import com.gaveship.category.application.CategoryService
+import com.gaveship.category.application.NotExistCategoryException
 import com.ninjasquad.springmockk.MockkBean
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.property.arbitrary.chunked
@@ -74,6 +75,28 @@ class CategoryControllerIntegrationTest(
                 .andDo(print())
                 .andExpect(status().isOk)
                 .andExpect(content().string(objectMapper.writeValueAsString(targetCategory)))
+        }
+
+        "Category 조회 NotExistCategory 테스트" {
+            val categoryChildren = Mock.category().chunked(10, 10).single()
+            val targetCategory = Mock.category(id = 1, children = categoryChildren).single()
+            val targetCategoryId = targetCategory.id ?: throw IllegalArgumentException()
+            every { categoryService.find(targetCategoryId) } throws NotExistCategoryException(targetCategoryId)
+
+            mockMvc.perform(get("$BASE_ENDPOINT/$targetCategoryId"))
+                .andDo(print())
+                .andExpect(status().isBadRequest)
+        }
+
+        "Category 조회 InternalServerError 테스트" {
+            val categoryChildren = Mock.category().chunked(10, 10).single()
+            val targetCategory = Mock.category(id = 1, children = categoryChildren).single()
+            val targetCategoryId = targetCategory.id ?: throw IllegalArgumentException()
+            every { categoryService.find(targetCategoryId) } throws RuntimeException()
+
+            mockMvc.perform(get("$BASE_ENDPOINT/$targetCategoryId"))
+                .andDo(print())
+                .andExpect(status().is5xxServerError)
         }
 
         "Category 수정 테스트" {
